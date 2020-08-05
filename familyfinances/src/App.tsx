@@ -4,6 +4,8 @@ import { History } from "history";
 import NavBar from "./components/NavBar";
 import { Route } from "react-router";
 import Transactions from "./containers/Transactions";
+import LoginForm from './components/EditTransaction'
+
 
 
 interface IAppProps {
@@ -15,7 +17,7 @@ class App extends React.Component<IAppProps> {
     return (
       <div>
         <Route component={NavBar} path="/" exact={false} />
-        <Route component={Transactions} path="/app" exact={true} />
+        <Route component={LoginForm} path="/app" exact={true} />
       </div>
     );
   }
