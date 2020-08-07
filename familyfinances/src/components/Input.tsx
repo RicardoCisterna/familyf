@@ -32,9 +32,9 @@ interface IInput{
 
 const Input = (props: IInput) => {
         const { label} = props
-        console.log(props.input )
+
         const inputs = {...props.input}
-        console.log(props.input)
+
             return(
                 <div>
                  <span style={spanStyle}>{label}</span>

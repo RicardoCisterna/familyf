@@ -20,23 +20,26 @@ interface ITransaction {
   categoria?: string;
   descripcion?: string;
   id:string
+  open:boolean
 }
 
 interface IExpensesTableProps {
   classes?: any
+  otroProp?:any
 }
 
 const rows: Array<ITransaction> = [
-  { id:'1',nombre: "papas", monto: 1000, categoria: "comida", descripcion: "bar" },
-  { id:'2',nombre: "otra cosa", monto: 1000, categoria: "comida", descripcion: "bar" },
-  {
+  { id:'1',nombre: "papas", monto: 1000, categoria: "comida", descripcion: "bar", open:false },
+{ id:'2',nombre: "otra cosa", monto: 1000, categoria: "comida", descripcion: "bar",open:false },
+ {
     id:'3',
     nombre: "otra cosa mas",
     monto: 1000,
     categoria: "comida",
-    descripcion: "bar"
+    descripcion: "bar",
+    open:false 
   },
-  { id:'4',nombre: "cerveza", monto: 1000, categoria: "comida", descripcion: "bar" }
+  { id:'4',nombre: "cerveza", monto: 1000, categoria: "comida", descripcion: "bar",open:false  }
 ];
 
 
@@ -68,16 +71,26 @@ const styles = (theme:any)=> createStyles({
 });
 
 
+class ExpensesTable extends React.Component< IExpensesTableProps, {id:string,open:boolean} > {
+  constructor(props:any){
+    super(props)
+    this.fetchModalTransaction = this.fetchModalTransaction.bind(this)
+    this.state = {id:'',open: false}
+    this.escFunction = this.escFunction.bind(this);
+  }
 
+  
+componentDidMount() {
+  document.addEventListener("keydown", this.escFunction, false);
+}
 
-
-export default class ExpensesTable extends React.Component< IExpensesTableProps> {
   public render() {
     const {classes} = this.props;
+
+    const transctionRows = rows.map(x =>{ 
     
-    const transctionRows = rows.map(x => (
-      <TableRow hover className={'hola'} key={x.nombre}>
-        <EditTransactionForm key={x.id} />
+      return(
+      <TableRow  className={classes.editableRow} key={x.nombre} data-item={x.id} id={x.id} onClick={this.fetchModalTransaction} >
         <TableCell
           className={classes.body}
           component="th"
@@ -96,9 +109,10 @@ export default class ExpensesTable extends React.Component< IExpensesTableProps>
           {x.descripcion}
         </TableCell>
       </TableRow>
-    ));
+    )})
 
     return (
+      <div style={{width:'100%'}}>        
       <TableContainer component={Paper}>
         <Table
           className={classes.table + " " + classes.head}
@@ -123,18 +137,34 @@ export default class ExpensesTable extends React.Component< IExpensesTableProps>
           <TableBody>{transctionRows}</TableBody>
         </Table>
       </TableContainer>
+      <EditTransactionForm  open={this.state} /> 
+      </div>
     );
   }
 
-  private handleOpen = () => {
-    
-    console.log('hola handle open tabel')
-  };
+  private handleOpen = (id:any) =>{
+    if(id) {
+    }else
+    return false
+}
 
+private fetchModalTransaction = (e:any) => {
+  const transaction = e.currentTarget.getAttribute('data-item');
+  this.setState({id: transaction,open:true})
+
+}
+
+private escFunction(event: any) {
+  if (event.keyCode === 27) {
+    this.setState({id: '',open:false})
+  }}
 
 
 
 }
+
+
+export default withStyles(styles)(ExpensesTable);
 /*
 const mapStateToProps = (state: any) => {
   const {

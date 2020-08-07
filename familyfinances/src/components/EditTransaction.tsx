@@ -4,12 +4,18 @@ import { reduxForm, InjectedFormProps, Field } from "redux-form";
 import Button from './Button'
 import Card from './Card'
 
-
+interface ITransaction {
+  nombre?: string;
+  monto?: number;
+  categoria?: string;
+  descripcion?: string;
+  id?:string
+  open?:boolean
+}
 
 export interface IModalTransactionProps {
-  modal:any
-  closeTransacionModal: () => void;
-  openTransacionModal: () => void;
+  closeTransacionModal?: () => void;
+  openTransacionModal?: () => void;
 }
 
 const style = { 
@@ -27,7 +33,7 @@ const style = {
 // inside your render() method
 
 
-class LoginForm extends React.Component<InjectedFormProps> {
+class EditTransaction extends React.Component<InjectedFormProps<ITransaction> & ITransaction> {
   public render() {
     return (
       <Card title='Editar Transaction'>
@@ -92,9 +98,9 @@ const mapDispatchToProps = (dispatch: any) =>
 
 const loginForm =connect(mapStateToProps, mapDispatchToProps)(LoginForm)*/
 
-export default reduxForm({
-  form: "login"
-})(LoginForm);
+export default reduxForm<{},ITransaction>({
+  form: "EditTransaction"
+})(EditTransaction);
 
 
 

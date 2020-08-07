@@ -16,37 +16,18 @@ export default class EditTransactionForm extends React.Component<
 > {
   constructor(props: IModalTransactionProps) {
     super(props);
-    this.escFunction = this.escFunction.bind(this);
-  }
-
-  componentDidMount() {
-    document.addEventListener("keydown", this.escFunction, false);
   }
 
   public render() {
-    const {open,id} = this.props
-    let opener
-    if (id == open.open && open.setOpen == true) {
-        opener = true
-      } else {
-        opener = false
-      }
-    
+    const {open} = this.props
     return (
-      <Modal open={opener}>
-        <EditTransactionModal />
+      <Modal open={open.open} idTransaccion={open.id}>
+        <EditTransactionModal id={open.id}/>
       </Modal>
     );
   }
-  private handleClose = () => {
-    console.log("blalblab");
-  };
 
-  private escFunction(event: any) {
-    if (event.keyCode === 27) {
-      this.handleClose();
-    }
-  }
+ 
 
 }
 

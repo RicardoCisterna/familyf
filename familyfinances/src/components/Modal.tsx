@@ -1,4 +1,5 @@
 import React from "react";
+import {History} from 'history'
 
 
 
@@ -45,23 +46,20 @@ const style = (open: any) => {
   }
 } 
 
-export class Modal extends React.Component<IModalTransactionProps> {
+export class Modal extends React.Component<IModalTransactionProps, {open:boolean,setOpen: boolean}> {
   constructor(props:any){
     super(props)
-    this.handleOpen = this.handleOpen.bind(this)
   }
-
 
   public render() {
     const { children,open} = this.props;
+    
     return <div style={style(open)}>
          {children}
     </div>;
   }
   
-  private handleOpen(){
-    this.setState({open:true})
-  }
+ 
 
 
 }

@@ -17,7 +17,7 @@ class App extends React.Component<IAppProps> {
     return (
       <div>
         <Route component={NavBar} path="/" exact={false} />
-        <Route component={LoginForm} path="/app" exact={true} />
+        <Route component={Transactions} path="/app" exact={true} />
       </div>
     );
   }
