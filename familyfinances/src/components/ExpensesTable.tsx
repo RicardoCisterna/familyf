@@ -75,6 +75,7 @@ class ExpensesTable extends React.Component< IExpensesTableProps, {id:string,ope
   constructor(props:any){
     super(props)
     this.fetchModalTransaction = this.fetchModalTransaction.bind(this)
+    this.closeModal = this.closeModal.bind(this)
     this.state = {id:'',open: false}
     this.escFunction = this.escFunction.bind(this);
   }
@@ -82,6 +83,7 @@ class ExpensesTable extends React.Component< IExpensesTableProps, {id:string,ope
   
 componentDidMount() {
   document.addEventListener("keydown", this.escFunction, false);
+  document.addEventListener('click',this.closeModal)
 }
 
   public render() {
@@ -155,10 +157,17 @@ private fetchModalTransaction = (e:any) => {
 }
 
 private escFunction(event: any) {
+
   if (event.keyCode === 27) {
     this.setState({id: '',open:false})
   }}
+private closeModal(event:any){
+  const close = event.target.getAttribute('id')
+  if(close =='buttonClose')
+  this.setState({id: '',open:false})
 
+
+}
 
 
 }
